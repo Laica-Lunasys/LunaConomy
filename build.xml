@@ -3,21 +3,21 @@
 	 2013/09/22 15:59:52
 	 squarep
 	 ====================================================================== -->
-<project name="Central" default="All">
+<project name="LunaConomy" default="All">
 
 	<property name="path.classpath" value="libs/**.jar"/>
 	<property name="path.target"	location="target"/>
 	<property name="path.sources"   location="src"/>
 	<property name="path.classes"   location="bin"/>
 	<property name="path.resources" location="resources"/>
-	<property name="file.destJar"   location="${path.target}/Central.jar"/>
+	<property name="file.destJar"   location="${path.target}/LunaConomy.jar"/>
 	
 	<tstamp>
 	 <format property="time.now" pattern="yyyy-MM-dd-HH-mm" />
 	</tstamp>
 	
 	<description>
-		Central Utilities
+		LunaConomy
 	</description>
 	
 	<!-- ================================= 

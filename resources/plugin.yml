@@ -1,4 +1,266 @@
-name: Central
-main: Central.CentralCore
-version: 0.1
-authors: [Laica-Lunasys, squarepp2]
+name: LunaConomy
+main: net.shiroumi.lunaconomy.LunaConomy
+version: 1.6
+description: >
+             Economy Plugin.
+permissions:
+   lunaconomy.*:
+      description: Gives access to all lunaconomy commands.
+      default: op
+      children:
+         lunaconomy.help: true
+         lunaconomy.account.*: true
+         lunaconomy.balance.*: true
+         lunaconomy.currency.*: true
+         lunaconomy.bank.*: true
+         lunaconomy.save: true
+         lunaconomy.reload: true
+   lunaconomy.help:
+      description: Allows user to access lunaconomy help.
+      default: true
+   lunaconomy.account.*:
+      description: Allows user to have an account.
+      default: op
+      children:
+         lunaconomy.account.have: true
+         lunaconomy.account.create: true
+         lunaconomy.account.delete: true
+   lunaconomy.account.have:
+      description: Allows user to have an account.
+      default: true
+   lunaconomy.account.create:
+      description: Allows user to create another account.
+      default: op
+   lunaconomy.account.delete:
+      description: Allows user to delete another account.
+      default: op
+   lunaconomy.balance.*:
+      description: Allows user to have access to basic balance features.
+      default: op
+      children:
+         lunaconomy.balance.check: true
+         lunaconomy.balance.get: true
+         lunaconomy.balance.set: true
+         lunaconomy.balance.pay: true
+         lunaconomy.balance.give: true
+         lunaconomy.balance.take: true
+         lunaconomy.balance.empty: true
+         lunaconomy.balance.top: true
+   lunaconomy.balance.check:
+      description: Allows user to check their balance.
+      default: true
+   lunaconomy.balance.get:
+      description: Allows user to get another user's balance.
+      default: op
+   lunaconomy.balance.set:
+      description: Allows user to set another user's balance.
+      default: op
+   lunaconomy.balance.pay:
+      description: Allows user to pay another user.
+      default: true
+   lunaconomy.balance.give:
+      description: Allows user to give money to another user.
+      default: op
+   lunaconomy.balance.take:
+      description: Allows user to take money away from another user.
+      default: op
+   lunaconomy.balance.empty:
+      description: Sets another user's balance to 0.
+      default: op
+   lunaconomy.balance.deposit:
+      description: Allows user to deposit physical currency into their account.
+      default: true
+   lunaconomy.balance.withdraw:
+      description: Allows user to withdraw physical currency from their account.
+      default: true
+   lunaconomy.balance.top:
+      description: Allows user to check the top accounts on the server.
+      default: true
+   lunaconomy.currency.*:
+      description: Allows user access to all currency commands.
+      default: op
+      children:
+         lunaconomy.currency.set: true
+         lunaconomy.currency.set.others: true
+   lunaconomy.currency.set:
+      description: Allows user set their currency.
+      default: true
+   lunaconomy.currency.set.others:
+      description: Allows user to set other accounts' currencies.
+      default: op
+   lunaconomy.save:
+      description: Allows user to save lunaconomy data.
+      default: op
+   lunaconomy.reload:
+      description: Allows user to reload lunaconomy data.
+      default: op
+   lunaconomy.bank.*:
+      description: Allows user to access all bank commands.
+      default: op
+      children:
+         lunaconomy.bank.create: true
+         lunaconomy.bank.delete: true
+         lunaconomy.bank.rename: true
+         lunaconomy.bank.account.*: true
+   lunaconomy.bank.account*:
+      description: Allows user to access all bank account commands.
+      default: op
+      children:
+         lunaconomy.bank.account.balance: true
+         lunaconomy.bank.account.create: true
+         lunaconomy.bank.account.delete: true
+         lunaconomy.bank.account.create.others: true
+         lunaconomy.bank.account.delete.others: true
+         lunaconomy.bank.account.get: true
+         lunaconomy.bank.account.set: true
+         lunaconomy.bank.account.empty: true
+         lunaconomy.bank.account.rename: true
+         lunaconomy.bank.account.rename.others: true
+         lunaconomy.bank.account.deposit: true
+         lunaconomy.bank.account.withdraw: true
+   lunaconomy.bank.account.balance:
+      description: Allows user to check bank account balance.
+      default: true
+   lunaconomy.bank.create:
+      description: Allows user to create banks.
+      default: op
+   lunaconomy.bank.delete:
+      description: Allows user to delete banks.
+      default: op
+   lunaconomy.bank.account.create:
+      description: Allows user to create their own bank accounts.
+      default: true
+   lunaconomy.bank.account.delete:
+      description: Allows user to delete their own bank accounts.
+      default: true
+   lunaconomy.bank.account.deposit:
+      description: Allows user to deposit money in their bank accounts.
+      default: true
+   lunaconomy.bank.account.withdraw:
+      description: Allows user to withdraw money from their bank accounts.
+      default: true
+   lunaconomy.bank.account.create.others:
+      description: Allows user to create bank accounts.
+      default: op
+   lunaconomy.bank.account.delete.others:
+      description: Allows user to delete bank accounts.
+      default: op
+   lunaconomy.bank.account.get:
+      description: Allows user to get bank account balances.
+      default: op
+   lunaconomy.bank.account.set:
+      description: Allows user to set bank account balances.
+      default: op
+   lunaconomy.bank.account.empty:
+      description: Allows user to empty bank accounts.
+      default: op
+   lunaconomy.bank.account.rename:
+      description: Allows user to rename bank accounts.
+      default: op
+   lunaconomy.bank.rename:
+      description: Allows user to rename banks.
+      default: op
+   lunaconomy.bank.account.transfer:
+      description: Allows user to transfer bank account funds.
+      default: true
+   lunaconomy.bank.account.transfer.others:
+      description: Allows user to transfer other bank account funds.
+      default: op
+commands:
+   lco:
+      description: Displays your balance.
+      usage: /lco
+   lco balance:
+      description: Displays your balance.
+      usage: /lco balance
+   lco help:
+      description: Displays lunaconomy help.
+      usage: /lco help
+   lco create:
+      description: Creates another account.
+      usage: /lco create <account>
+   lco delete:
+      description: Deletes an account.
+      usage: /lco delete <account>
+   lco pay:
+      description: Pays another player.
+      usage: /lco pay <account> <amount>
+   lco set:
+      description: Set another account's balance.
+      usage: /lco set <account> <balance>
+   lco get:
+      description: Gets another account's balance.
+      usage: /lco get <account>
+   lco give:
+      description: Gives another account money.
+      usage: /lco give <account> <amount>
+   lco take:
+      description: Takes money from another account.
+      usage: /lco take <account> <amount>
+   lco empty:
+      description: Sets another account's balance to zero.
+      usage: /lco empty <account>
+   lco deposit:
+      description: Deposits physical currency into account.
+      usage: /lco deposit <amount>
+   lco withdraw:
+      description: Withdraws physical currency from account.
+      usage: /lco withdraw <amount>
+   lco top:
+      description: Displays the top accounts on the server.
+      usage: /lco top
+   lco exp:
+      description: Displays your amount of experience.
+      usage: /lco exp
+   lco setcurrency:
+      description: Sets the currency of the specified account.
+      usage: /lco setcurrency (account) <type>
+   lco save:
+      description: Saves all lunaconomy data.
+      usage: /lco save
+   lco reload:
+      description: Reloads all lunaconomy data.
+      usage: /lco save
+   money:
+      description: Alias for 'lco'
+      usage: /money COMMAND
+   lcob:
+      description: Displays your balance in specified bank.
+      usage: /lcob <bank>
+   lcob balance:
+      description: Displays your balance in specified bank.
+      usage: /lcob balance <bank>
+   lcob join:
+      description: Joins specified bank.
+      usage: /lcob join <bank>
+   lcob leave:
+      description: Leaves specified bank.
+      usage: /lcob leave <bank>
+   lcob deposit:
+      description: Deposits amount in their account.
+      usage: /lcob depsoit <bank> <amount>
+   lcob withdraw:
+      description: Withdraws amount from their account.
+      usage: /lcob leave <bank> <amount>
+   lcob create:
+      description: Creates new bank/bank account.
+      usage: /lcob create <bank> (account)
+   lcob delete:
+      description: Deletes specified bank/bank account.
+      usage: /lcob delete <bank> (account)
+   lcob get:
+      description: Displays the balance of specified bank account.
+      usage: /lcob get <bank> <account>
+   lcob set:
+      description: Sets the balance of specified bank account.
+      usage: /lcob set <bank> <account> <balance>
+   lcob empty:
+      description: Empties the specified bank account.
+      usage: /lcob empty <bank> <account>
+   lcob rename:
+      description: Renames the specified bank/bank account.
+      usage: /lcob rename <bank> (account) <newbank> (newaccount)
+   lcob transfer:
+      description: Transfers the specified amount from bank account to bank account.
+      usage: /lcob transfer <bank> <account> <tobank> <toaccount> <amount>
+   
