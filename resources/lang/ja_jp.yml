@@ -1,0 +1,33 @@
+_####################################
+# Central Language File (Japanese)                    #
+####################################
+
+infoprefix: '&a[情報]&f '
+alertprefix: '&c[警告]&f '
+
+joinmessage: '%player さんが接続しました。評価値: %rep'
+
+fatalerror: '&c致命的なエラーが発生しました。 詳細はコンソールをご覧ください'
+errorperm: '&c権限がありません &f(%perm)'
+playernotfound: '&cプレイヤーが見つかりませんでした : %player'
+onlinePlayers: '&a現在のオンラインユーザー: %onlineuser'
+serverreload: '&aサーバーをリロードします'
+serverreloadsuc: '&aサーバーのリロードが完了しました'
+serverstopcount: '&cサーバーは&e%count秒後&cに停止します!'
+serverstopped: 'サーバーが停止しました'
+serverlockdown: '%locktime秒後にサーバーはロックされます。サーバーに留まる権限がない場合はキックされます'
+serverlockmsg: '&c現在このサーバーはロックされているため接続できません'
+serverunlock: '&aサーバーがのロックが解除されました'
+pluginreload: '&aプラグインを再読み込みしました(%plugin)'
+pluginenabled: '&aプラグインを起動しました (%plugin)'
+plugindisabled: '&cプラグインを停止しました (%plugin)'
+pluginnotfound: '&c%plugin は存在しません'
+clearinventory: '&c%playerさんのインベントリを削除しました'
+worldnotfound: '&cワールドデータが見つかりませんでした : %world'
+worldcreatefail: '&cワールドの生成に失敗しました : %world'
+worldcreatesuccess: '&aワールドの生成に成功しました！ : %world'
+worldteleport: '&aワールド : %worldへテレポートしました'
+cmdplayeronly: '&cこのコマンドはコンソールからは実行できません'
+cmdconsoleonly: '&cこのコマンドはプレイヤーからは実行できません'
+cmdillegalargument: '&c引数が足りないか間違っています'
+noreply: '&cメッセージを受け取っていません'

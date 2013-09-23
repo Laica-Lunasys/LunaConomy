@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	 2013/09/22 15:59:52
+	 squarep
+	 ====================================================================== -->
+<project name="Central" default="All">
+
+	<property name="path.classpath" value="libs/**.jar"/>
+	<property name="path.target"	location="target"/>
+	<property name="path.sources"   location="src"/>
+	<property name="path.classes"   location="bin"/>
+	<property name="path.resources" location="resources"/>
+	<property name="file.destJar"   location="${path.target}/Central.jar"/>
+	
+	<tstamp>
+	 <format property="time.now" pattern="yyyy-MM-dd-HH-mm" />
+	</tstamp>
+	
+	<description>
+		Central Utilities
+	</description>
+	
+	<!-- ================================= 
+	  target: All
+		 ================================= -->
+	<target name="All" depends="Build, FCopy, JAR" description="Compile -> Packing">
+		<length file="${file.destJar}" property="Jar.size"/>
+		<script language="javascript">
+			<![CDATA[
+				var length_bytes = project.getProperty("Jar.size");
+				var length_kbytes = Math.round((length_bytes / 1024) * Math.pow(10,2))
+								  / Math.pow(10,2);
+				project.setNewProperty("Jar.kbsize", length_kbytes);
+			]]>
+			</script>
+		<echo message="Outputted ${file.destJar}" />
+		<echo message="size: ${Jar.kbsize}KB" />
+	</target>
+
+	<!-- ================================= 
+		  target: Build	
+		 ================================= -->
+	<target name="Build" description="Sources Compile">
+		<javac srcdir = "${path.sources}" destdir = "${path.classes}"
+			   classpath = "${path.classpath}" includeantruntime="false"/>
+	</target>
+	
+	<!-- ================================= 
+		  target: FCopy				  
+		================================= -->
+	<target name="FCopy" description="Prepare Make-JAR, FileCopy">
+		<copy todir="${path.target}/classes" >
+		  <fileset dir="${path.classes}/" />
+		</copy>
+		<copy todir="${path.target}/classes" >
+		  <fileset dir="${path.resources}/" />
+		</copy>
+	</target>
+	<!-- ================================= 
+		  target: JAR
+		================================= -->
+	<target name="JAR" description="Make-JAR">
+		<jar destfile="${file.destJar}" basedir="${path.target}/classes"></jar>
+	</target>
+</project>

@@ -1,0 +1,4 @@
+name: Central
+main: Central.CentralCore
+version: 0.1
+authors: [Laica-Lunasys, squarepp2]
