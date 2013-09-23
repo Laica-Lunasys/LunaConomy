@@ -263,4 +263,4 @@ commands:
    lcob transfer:
       description: Transfers the specified amount from bank account to bank account.
       usage: /lcob transfer <bank> <account> <tobank> <toaccount> <amount>
-   
+   money:

@@ -72,9 +72,12 @@ public class Util {
 		BufferedReader br = null;
 		OutputStream   os = null;
 		PrintWriter    pw = null;
+		System.out.println("Util => copyFileFromJar : " + sourceFilePath);
 		try {
 			jar = new JarFile(LunaConomyCore.getInstance().getPluginJarFile());
+			System.out.println("Util => copyFileFromJar : " + jar);
 			entry = jar.getEntry(sourceFilePath);
+			System.out.println("Util => copyFileFromJar : " + entry);
 			is = jar.getInputStream(entry);
 			if(isBinary) {
 			os = new FileOutputStream(targetFile);

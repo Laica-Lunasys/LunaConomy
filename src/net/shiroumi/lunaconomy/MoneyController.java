@@ -30,23 +30,31 @@ public final class MoneyController {
 			moneyMap = deserializeMoneyMap(sb.toString());
 			br.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			try {
+				par1File.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (IllegalArgumentException e){
+			
 		}
 	}
 	
-	public static void save(File par1File){
+	public static void save(File par1File) throws IOException{
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(par1File));
 			bw.write(serializeMoneyMap());
 			bw.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw e;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
+	
+	
 	
 	private static String serializeMoneyMap(){
 		StringBuilder sb = new StringBuilder();
@@ -59,6 +67,7 @@ public final class MoneyController {
 		}
 		return sb.toString();
 	}
+	
 	private static Map<Player, Integer> deserializeMoneyMap(String par1Buf){
 		Map<Player, Integer> map = new HashMap<Player, Integer>();
 		for(String s : par1Buf.split("\n")){
