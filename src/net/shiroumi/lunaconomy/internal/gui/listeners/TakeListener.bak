@@ -1,0 +1,66 @@
+package net.shiroumi.lunaconomy.internal.gui.listeners;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import net.shiroumi.lunaconomy.internal.lcoCom;
+import net.shiroumi.lunaconomy.internal.Settings;
+import net.shiroumi.lunaconomy.internal.gui.GUI;
+
+/**
+ * Handles take button action.
+ * 
+ * @author Laica-Lunasys (Origin by MjolnirCommando)
+ */
+public class TakeListener implements ActionListener
+{
+
+	public void actionPerformed(ActionEvent e)
+	{
+		try
+		{
+			double amount = Double.parseDouble(GUI.amount.getText());
+			amount = Math.abs(amount);
+			if (lcoCom.getBalance(GUI.selectedAccount)
+					+ Settings.maxDebt >= amount)
+			{
+				lcoCom.setBalance(
+						GUI.selectedAccount,
+						lcoCom.getBalance(GUI.selectedAccount) - amount);
+				if (lcoCom.getBalance(GUI.selectedAccount) >= 0)
+				{
+					GUI.balance
+							.setText("<html><center>Balance: <span style=\"color:green;\">"
+									+ lcoCom.getBalance(
+											GUI.selectedAccount)
+									+ "</span> "
+									+ lcoCom.getAccountCurrency(GUI.selectedAccount) + "</center></html>");
+				}
+				else
+				{
+					GUI.balance
+							.setText("<html><center>Balance: <span style=\"color:red;\">"
+									+ lcoCom.getBalance(
+											GUI.selectedAccount)
+									+ "</span> "
+									+ lcoCom.getAccountCurrency(GUI.selectedAccount) + "</center></html>");
+				}
+				GUI.balance.revalidate();
+				GUI.reloadAccounts(false);
+				GUI.title
+						.setText("<html><center>Control Panel<br><br><br></center></html>");
+			}
+			else
+			{
+				GUI.title
+						.setText("<html><center>Control Panel<br><span style=\"color:red;\">Account does not have enough money.</span><br><br></center></html>");
+			}
+		}
+		catch (NumberFormatException e1)
+		{
+			GUI.title
+					.setText("<html><center>Control Panel<br><span style=\"color:red;\">Amount must be a number.</span><br><br></center></html>");
+		}
+	}
+
+}

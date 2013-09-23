@@ -1,0 +1,425 @@
+package net.shiroumi.lunaconomy.internal;
+
+import java.io.File;
+import java.io.IOException;
+
+import net.shiroumi.lunaconomy.LunaConomy;
+import net.shiroumi.lunaconomy.internal.util.IOH;
+import net.shiroumi.lunaconomy.internal.util.lcoFormat;
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+/**
+ * Handles language file loading.
+ * 
+ * @author Laica-Lunasys (Origin by MjolnirCommando)
+ */
+@SuppressWarnings("javadoc")
+public class MCLang
+{
+    private static String langtag = "LunaConomy";
+    public static String tag = ChatColor.GREEN + "[" + langtag + "] ";
+    
+    public static String welcomeMessage = "&fWelcome to LunaConomy, %player%! Your balance is &a%pos-balance%&c%neg-balance% &f%currency%. Type '/lco help' for help.";
+    
+    public static boolean displayWelcome = false;
+    
+    public static String messageWelcomeAccountCreated = "&fYour LunaConomy Account has been created!";
+    public static String messageAccountBalance = "&fBalance: &a%pos-balance%&c%neg-balance% &f%currency%";
+    public static String messageBankBalance = "&f[%bank%] Balance: &a%pos-balance%&c%neg-balance%";
+    public static String warnOp = "&eA new version of LunaConomy is available! Download it at http://dev.bukkit.org/server-mods/LunaConomy/";
+    public static String errorPermissionHaveAccount = "&cYou do not have permission to have an account.";
+    public static String errorPermissionGeneric = "&cYou do not have permission to do that.";
+    public static String errorInt = "&cYou must enter an integer!";
+    public static String errorInvalidArgs = "&cInvalid number of arguements!";
+    public static String errorCommandRecognition = "&fLunaConomy did not recognize your command. Type &7/lco help &ffor help with LunaConomy commands.";
+    public static String errorCurrencyNotFound = "&cThe currency you requested does not exist.";
+    public static String messageCurrencySet = "&f%player%'s currency has been set to %currency%.";
+    public static String messageExpCheck = "&fExperience: &a%exp% &fpoints";
+    public static String messageGetBalance = "&f%player%'s account balance is %balance% %currency%.";
+    public static String messageSetBalance = "&f%player%'s account balance is set to %balance% %currency%.";
+    public static String errorMaxDebt = "&cThe value requested is below the maxium allowed debt.";
+    public static String messageGive = "&fGave %player% %amount% %currency%.";
+    public static String errorTheyEnough = "&c%player% did not have enough money!";
+    public static String errorYouEnough = "&cYou do not have enough money!";
+    public static String messagePayedTo = "&f%amount% %currency% has been payed to %player%.";
+    public static String messagePayedFrom = "&f%player% has payed you %amount% %currency%.";
+    public static String messageTook = "&fTook %amount% %currency% from %account%.";
+    public static String messageEmpty = "&fSet %account%'s balance to 0.";
+    public static String messageCreated = "&fCreated account '%account%'.";
+    public static String errorAccountExists = "&cThe account '%account%' already exists!";
+    public static String messageDeleted = "&fAccount '%account%' has been deleted.";
+    public static String errorNoAccount = "&cThe account you requested does not exist.";
+    public static String errorNoBank = "&cThe bank you requested (%bank%) does not exist.";
+    public static String errorNoBankAccount = "&cThe account you requested in the specified bank (%bank%) does not exist.";
+    public static String messageBankCreated = "&fCreated bank '%bank%'.";
+    public static String errorBankExists = "&cThe bank '%bank%' already exists!";
+    public static String messageBankDeleted = "&fBank '%bank%' has been deleted.";
+    public static String errorMoneyFormat = "&cYou must enter the correct monetarily formatted number.";
+    public static String errorBankAccountExists = "&cThe account '%account%' in bank '%bank%' does not exist";
+    public static String messageBankAccountCreated = "&fCreated account '%account%' in bank '%bank%'.";
+    public static String messageBankAccountDeleted = "&fDeleted account '%account%' in bank '%bank%'.";
+    public static String messageEmptyBankAccount = "&fSet %account%'s balance in bank %bank% to 0.";
+    public static String messageBankRenamed = "&fRenamed bank '%oldbank%' to '%bank%'.";
+    public static String messageGetBankAccount = "&f%account%'s balance in bank %bank% is %balance%.";
+    public static String messageSetBankAccount = "&fSet %account%'s balance in bank %bank% to %balance%.";
+    public static String messageBankAccountRenamed = "&fRenamed account '%oldaccount%' in bank '%oldbank% to '%account%' in bank '%bank%'";
+    public static String messageBankAccountDeposit = "&fDeposited %amount% in %account% in bank %bank%.";
+    public static String messageBankAccountWithdraw = "&fWithdrew %amount% in %account% in bank %bank%.";
+    public static String messageTransactionComplete = "&fTransaction complete.";
+    public static String errorNoPhysicalCurrency = "&cThat Physical Currency could not be found.";
+    public static String errorExpEnough = "&cYou do not have enough experience.";
+    public static String messageHelp1 = "<br>&a===== LunaConomy Help Page 1/3 =====<br>&f<REQUIRED> [OPTION] (OPTIONAL)<br><br>&7/lco help <PAGE>&f - displays this menu.<br>&7/lco balance &for &7/money &f- displays your account balance.<br>&7/lco pay <ACCOUNT> &f- pays specified account.<br>&7/lco get <ACCOUNT> &f- displays specified account's balance.<br>&7/lco set <ACCOUNT> <AMOUNT> &f- sets specified account's balance.<br>&7/lco empty <ACCOUNT> &f- sets specified account's balance to 0.<br>&7/lco create <ACCOUNT> &f- creates new account.<br>&7/lco delete <ACCOUNT> &f- deletes existing account.<br>&7/lco give <ACCOUNT> <AMOUNT> &f- gives specified account the specified amount.<br>&7/lco take <ACCOUNT> <AMOUNT> &f- takes specified amount from the specified account.<br>&7/lco exp &f- displays your amount of experience.";
+    public static String messageHelp2 = "<br>&a===== LunaConomy Help Page 2/3 =====<br>&7/lco deposit <TYPE> <AMOUNT> &f- deposits specified amount of physical currency into your account.<br>&7/lco withdraw <TYPE> <AMOUNT> &f- withdraws specified amount of physical currency from your account.<br>&7/lco setcurrency (ACCOUNT) <CURRENCY> &f- sets the specified account's currency.<br>&7/lcob <BANK> &f- displays your balance in the specified bank.<br>&7/lcob balance <BANK> &f- displays your balance in the specified bank.<br>&7/lcob create <BANK> (ACCOUNT) &f- creates new bank/bank account.<br>&7/lcob delete <BANK> (ACCOUNT) &f- deletes specified bank/bank account.<br>&7/lcob get <BANK> <ACCOUNT> &f- displays the balance of specified bank account.<br>&7/lcob set <BANK> <ACCOUNT> &f- sets the balance of specified bank account.";
+    public static String messageHelp3 = "<br>&a===== LunaConomy Help Page 3/3 =====<br>&7/lcob empty <BANK> <ACCOUNT> &f- empties the specified bank account.<br>&7/lcob rename <BANK> (ACCOUNT) <NEW_BANK> (NEW_ACCOUNT) &f- renames the specified bank/bank account.<br>&7/lcob transfer <BANK> (ACCOUNT) <TO_BANK> <TO_ACCOUNT> <AMOUNT> &f- transfers the specified amount from bank account to bank account.<br>&7/lcob join <BANK> &f- joins specified bank.<br>&7/lcob leave <BANK> &f- leaves specified bank.<br>&7/lcob deposit <BANK> <AMOUNT> &f- deposits amount in your account.<br>&7/lcob withdraw <BANK> <AMOUNT> &f- withdraws amount from your account.";
+    
+    public static File                      langFile = new File(
+            LunaConomy.maindir + "lang/"
+                    + "lang-" + Settings.lang + ".yml");
+    private static YamlConfiguration         lang;
+    
+    public static void load()
+    {
+        lang = YamlConfiguration.loadConfiguration(langFile);
+        lang
+                .options()
+                .header("=== LunaConomy Language ===\n\n    \n");
+
+        if (!langFile.exists())
+        {
+            IOH.log("Language file not found...", IOH.INFO);
+            lang.set("Lang", "");
+            lang.set("Lang.Tag", langtag);
+            lang.set("Lang.Message.Welcome Message", welcomeMessage);
+            lang.set("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated);
+            lang.set("Lang.Message.Account Balance", messageAccountBalance);
+            lang.set("Lang.Message.Bank Balance", messageBankBalance);
+            lang.set("Lang.Op.Update", warnOp);
+            lang.set("Lang.Error.Permission.Have Account", errorPermissionHaveAccount);
+            lang.set("Lang.Error.Permission.Generic", errorPermissionGeneric);
+            lang.set("Lang.Error.Int", errorInt);
+            lang.set("Lang.Error.Invalid Args", errorInvalidArgs);
+            lang.set("Lang.Error.Command.Recognition", errorCommandRecognition);
+            lang.set("Lang.Error.Currency Not Found", errorCurrencyNotFound);
+            lang.set("Lang.Message.Currency Set", messageCurrencySet);
+            lang.set("Lang.Message.Exp Check", messageExpCheck);
+            lang.set("Lang.Message.Get Balance", messageGetBalance);
+            lang.set("Lang.Message.Set Balance", messageSetBalance);
+            lang.set("Lang.Error.Max Debt", errorMaxDebt);
+            lang.set("Lang.Message.Give", messageGive);
+            lang.set("Lang.Error.They Enough", errorTheyEnough);
+            lang.set("Lang.Error.You Enough", errorYouEnough);
+            lang.set("Lang.Message.Payed To", messagePayedTo);
+            lang.set("Lang.Message.Payed From", messagePayedFrom);
+            lang.set("Lang.Message.Took", messageTook);
+            lang.set("Lang.Message.Empty", messageEmpty);
+            lang.set("Lang.Message.Account Created", messageCreated);
+            lang.set("Lang.Error.Account Exists", errorAccountExists);
+            lang.set("Lang.Message.Account Deleted", messageDeleted);
+            lang.set("Lang.Error.No Account", errorNoAccount);
+            lang.set("Lang.Error.No Bank", errorNoBank);
+            lang.set("Lang.Error.No Bank Account", errorNoBankAccount);
+            lang.set("Lang.Message.Bank Created", messageBankCreated);
+            lang.set("Lang.Error.Bank Exists", errorBankExists);
+            lang.set("Lang.Message.Bank Deleted", messageBankDeleted);
+            lang.set("Lang.Error.Money Format", errorMoneyFormat);
+            lang.set("Lang.Error.Bank Account Exists", errorBankAccountExists);
+            lang.set("Lang.Message.Bank Account Created", messageBankAccountCreated);
+            lang.set("Lang.Message.Bank Account Deleted", messageBankAccountDeleted);
+            lang.set("Lang.Message.Empty Bank Account", messageEmptyBankAccount);
+            lang.set("Lang.Message.Bank Renamed", messageBankRenamed);
+            lang.set("Lang.Message.Get Bank Account", messageGetBankAccount);
+            lang.set("Lang.Message.Set Bank Account", messageSetBankAccount);
+            lang.set("Lang.Message.Bank Account Renamed", messageBankAccountRenamed);
+            lang.set("Lang.Message.Bank Account Deposit", messageBankAccountDeposit);
+            lang.set("Lang.Message.Bank Account Withdraw", messageBankAccountWithdraw);
+            lang.set("Lang.Message.Transaction Complete", messageTransactionComplete);
+            lang.set("Lang.Error.No Physical Currency", errorNoPhysicalCurrency);
+            lang.set("Lang.Error.Exp Enough", errorExpEnough);
+            lang.set("Lang.Message.Help.Page 1", messageHelp1);
+            lang.set("Lang.Message.Help.Page 2", messageHelp2);
+            lang.set("Lang.Message.Help.Page 3", messageHelp3);
+            
+            IOH.log("Language file created!", IOH.INFO);
+            save();
+        }
+
+        IOH.log("Loading Language file...", IOH.INFO);
+
+        reload();
+        
+        IOH.log("Language file loaded!", IOH.INFO);
+    }
+    
+    public static void reload()
+    {
+        lang = YamlConfiguration.loadConfiguration(langFile);
+        
+        welcomeMessage = lcoFormat.color(lang.getString("Lang.Message.Welcome Message", welcomeMessage));
+        if (welcomeMessage.equals(""))
+        {
+            displayWelcome = false;
+        }
+        else
+        {
+            displayWelcome = true;
+        }
+        
+        langtag = lcoFormat.color(lang.getString("Lang.Tag", langtag));
+        messageWelcomeAccountCreated = lcoFormat.color(lang.getString("Lang.Message.Welcome Account Created", messageWelcomeAccountCreated));
+        messageAccountBalance = lcoFormat.color(lang.getString("Lang.Message.Account Balance", messageAccountBalance));
+        messageBankBalance = lcoFormat.color(lang.getString("Lang.Message.Bank Balance", messageBankBalance));
+        warnOp = lcoFormat.color(lang.getString("Lang.Op.Update", warnOp));
+        errorPermissionHaveAccount = lcoFormat.color(lang.getString("Lang.Error.Permission.Have Account", errorPermissionHaveAccount));
+        errorPermissionGeneric = lcoFormat.color(lang.getString("Lang.Error.Permission.Generic", errorPermissionGeneric));
+        errorInt = lcoFormat.color(lang.getString("Lang.Error.Int", errorInt));
+        errorInvalidArgs = lcoFormat.color(lang.getString("Lang.Error.Invalid Args", errorInvalidArgs));
+        errorCommandRecognition = lcoFormat.color(lang.getString("Lang.Error.Command.Recognition", errorCommandRecognition));
+        errorCurrencyNotFound = lcoFormat.color(lang.getString("Lang.Error.Currency Not Found", errorCurrencyNotFound));
+        messageCurrencySet = lcoFormat.color(lang.getString("Lang.Message.Currency Set", messageCurrencySet));
+        messageExpCheck = lcoFormat.color(lang.getString("Lang.Message.Exp Check", messageExpCheck));
+        messageGetBalance = lcoFormat.color(lang.getString("Lang.Message.Get Balance", messageGetBalance));
+        messageSetBalance = lcoFormat.color(lang.getString("Lang.Message.Set Balance", messageSetBalance));
+        errorMaxDebt = lcoFormat.color(lang.getString("Lang.Error.Max Debt", errorMaxDebt));
+        messageGive = lcoFormat.color(lang.getString("Lang.Message.Give", messageGive));
+        errorTheyEnough = lcoFormat.color(lang.getString("Lang.Error.They Enough", errorTheyEnough));
+        errorYouEnough = lcoFormat.color(lang.getString("Lang.Error.You Enough", errorYouEnough));
+        messagePayedTo = lcoFormat.color(lang.getString("Lang.Message.Payed To", messagePayedTo));
+        messagePayedFrom = lcoFormat.color(lang.getString("Lang.Message.Payed From", messagePayedFrom));
+        messageTook = lcoFormat.color(lang.getString("Lang.Message.Took", messageTook));
+        messageEmpty = lcoFormat.color(lang.getString("Lang.Message.Empty", messageEmpty));
+        messageCreated = lcoFormat.color(lang.getString("Lang.Message.Account Created", messageCreated));
+        errorAccountExists = lcoFormat.color(lang.getString("Lang.Error.Account Exists", errorAccountExists));
+        messageDeleted = lcoFormat.color(lang.getString("Lang.Message.Account Deleted", messageDeleted));
+        errorNoAccount = lcoFormat.color(lang.getString("Lang.Error.No Account", errorNoAccount));
+        errorNoBank = lcoFormat.color(lang.getString("Lang.Error.No Bank", errorNoBank));
+        errorNoBankAccount = lcoFormat.color(lang.getString("Lang.Error.No Bank Account", errorNoBankAccount));
+        messageBankCreated = lcoFormat.color(lang.getString("Lang.Message.Bank Created", messageBankCreated));
+        errorBankExists = lcoFormat.color(lang.getString("Lang.Error.Bank Exists", errorBankExists));
+        messageBankDeleted = lcoFormat.color(lang.getString("Lang.Message.Bank Deleted", messageBankDeleted));
+        errorMoneyFormat = lcoFormat.color(lang.getString("Lang.Error.Money Format", errorMoneyFormat));
+        errorBankAccountExists = lcoFormat.color(lang.getString("Lang.Error.Bank Account Exists", errorBankAccountExists));
+        messageBankAccountCreated = lcoFormat.color(lang.getString("Lang.Message.Bank Account Created", messageBankAccountCreated));
+        messageBankAccountDeleted = lcoFormat.color(lang.getString("Lang.Message.Bank Account Deleted", messageBankAccountDeleted));
+        messageEmptyBankAccount = lcoFormat.color(lang.getString("Lang.Message.Empty Bank Account", messageEmptyBankAccount));
+        messageBankRenamed = lcoFormat.color(lang.getString("Lang.Message.Bank Renamed", messageBankRenamed));
+        messageGetBankAccount = lcoFormat.color(lang.getString("Lang.Message.Get Bank Account", messageGetBankAccount));
+        messageSetBankAccount = lcoFormat.color(lang.getString("Lang.Message.Set Bank Account", messageSetBankAccount));
+        messageBankAccountRenamed = lcoFormat.color(lang.getString("Lang.Message.Bank Account Renamed", messageBankAccountRenamed));
+        messageBankAccountDeposit = lcoFormat.color(lang.getString("Lang.Message.Bank Account Deposit", messageBankAccountDeposit));
+        messageBankAccountWithdraw = lcoFormat.color(lang.getString("Lang.Message.Bank Account Withdraw", messageBankAccountWithdraw));
+        messageTransactionComplete = lcoFormat.color(lang.getString("Lang.Message.Transaction Complete", messageTransactionComplete));
+        errorNoPhysicalCurrency = lcoFormat.color(lang.getString("Lang.Error.No Physical Currency", errorNoPhysicalCurrency));
+        errorExpEnough = lcoFormat.color(lang.getString("Lang.Error.Exp Enough", errorExpEnough));
+        messageHelp1 = lcoFormat.color(lang.getString("Lang.Message.Help.Page 1", messageHelp1));
+        messageHelp2 = lcoFormat.color(lang.getString("Lang.Message.Help.Page 2", messageHelp2));
+        messageHelp3 = lcoFormat.color(lang.getString("Lang.Message.Help.Page 3", messageHelp3));
+        
+        tag = ChatColor.GREEN + "[" + langtag + "] ";
+    }
+    
+    public static void save()
+    {
+        lang.set("Lang", "");
+        lang.set("Lang.Tag", lcoFormat.decolor(langtag));
+        lang.set("Lang.Message.Welcome Message", lcoFormat.decolor(welcomeMessage));
+        lang.set("Lang.Message.Welcome Account Created", lcoFormat.decolor(messageWelcomeAccountCreated));
+        lang.set("Lang.Message.Account Balance", lcoFormat.decolor(messageAccountBalance));
+        lang.set("Lang.Message.Bank Balance", lcoFormat.decolor(messageBankBalance));
+        lang.set("Lang.Op.Update", lcoFormat.decolor(warnOp));
+        lang.set("Lang.Error.Permission.Have Account", lcoFormat.decolor(errorPermissionHaveAccount));
+        lang.set("Lang.Error.Permission.Generic", lcoFormat.decolor(errorPermissionGeneric));
+        lang.set("Lang.Error.Int", lcoFormat.decolor(errorInt));
+        lang.set("Lang.Error.Invalid Args", lcoFormat.decolor(errorInvalidArgs));
+        lang.set("Lang.Error.Command.Recognition", lcoFormat.decolor(errorCommandRecognition));
+        lang.set("Lang.Error.Currency Not Found", lcoFormat.decolor(errorCurrencyNotFound));
+        lang.set("Lang.Message.Currency Set", lcoFormat.decolor(messageCurrencySet));
+        lang.set("Lang.Message.Exp Check", lcoFormat.decolor(messageExpCheck));
+        lang.set("Lang.Message.Get Balance", lcoFormat.decolor(messageGetBalance));
+        lang.set("Lang.Message.Set Balance", lcoFormat.decolor(messageSetBalance));
+        lang.set("Lang.Error.Max Debt", lcoFormat.decolor(errorMaxDebt));
+        lang.set("Lang.Message.Give", lcoFormat.decolor(messageGive));
+        lang.set("Lang.Error.They Enough", lcoFormat.decolor(errorTheyEnough));
+        lang.set("Lang.Error.You Enough", lcoFormat.decolor(errorYouEnough));
+        lang.set("Lang.Message.Payed To", lcoFormat.decolor(messagePayedTo));
+        lang.set("Lang.Message.Payed From", lcoFormat.decolor(messagePayedFrom));
+        lang.set("Lang.Message.Took", lcoFormat.decolor(messageTook));
+        lang.set("Lang.Message.Empty", lcoFormat.decolor(messageEmpty));
+        lang.set("Lang.Message.Account Created", lcoFormat.decolor(messageCreated));
+        lang.set("Lang.Error.Account Exists", lcoFormat.decolor(errorAccountExists));
+        lang.set("Lang.Message.Account Deleted", lcoFormat.decolor(messageDeleted));
+        lang.set("Lang.Error.No Account", lcoFormat.decolor(errorNoAccount));
+        lang.set("Lang.Error.No Bank", lcoFormat.decolor(errorNoBank));
+        lang.set("Lang.Error.No Bank Account", lcoFormat.decolor(errorNoBankAccount));
+        lang.set("Lang.Message.Bank Created", lcoFormat.decolor(messageBankCreated));
+        lang.set("Lang.Error.Bank Exists", lcoFormat.decolor(errorBankExists));
+        lang.set("Lang.Message.Bank Deleted", lcoFormat.decolor(messageBankDeleted));
+        lang.set("Lang.Error.Money Format", lcoFormat.decolor(errorMoneyFormat));
+        lang.set("Lang.Error.Bank Account Exists", lcoFormat.decolor(errorBankAccountExists));
+        lang.set("Lang.Message.Bank Account Created", lcoFormat.decolor(messageBankAccountCreated));
+        lang.set("Lang.Message.Bank Account Deleted", lcoFormat.decolor(messageBankAccountDeleted));
+        lang.set("Lang.Message.Empty Bank Account", lcoFormat.decolor(messageEmptyBankAccount));
+        lang.set("Lang.Message.Bank Renamed", lcoFormat.decolor(messageBankRenamed));
+        lang.set("Lang.Message.Get Bank Account", lcoFormat.decolor(messageGetBankAccount));
+        lang.set("Lang.Message.Set Bank Account", lcoFormat.decolor(messageSetBankAccount));
+        lang.set("Lang.Message.Bank Account Renamed", lcoFormat.decolor(messageBankAccountRenamed));
+        lang.set("Lang.Message.Bank Account Deposit", lcoFormat.decolor(messageBankAccountDeposit));
+        lang.set("Lang.Message.Bank Account Withdraw", lcoFormat.decolor(messageBankAccountWithdraw));
+        lang.set("Lang.Message.Transaction Complete", lcoFormat.decolor(messageTransactionComplete));
+        lang.set("Lang.Error.No Physical Currency", lcoFormat.decolor(errorNoPhysicalCurrency));
+        lang.set("Lang.Error.Exp Enough", lcoFormat.decolor(errorExpEnough));
+        lang.set("Lang.Message.Help.Page 1", lcoFormat.decolor(messageHelp1));
+        lang.set("Lang.Message.Help.Page 2", lcoFormat.decolor(messageHelp2));
+        lang.set("Lang.Message.Help.Page 3", lcoFormat.decolor(messageHelp3));
+        
+        try
+        {
+            lang.save(langFile);
+        }
+        catch (IOException e)
+        {
+            IOH.error("IOException", e);
+        }
+        
+        reload();
+    }
+    
+    public static String parse(String message, String[] args)
+    {
+        if (message.equals(welcomeMessage))
+        {
+            message = message.replace("%player%", args[0]);
+            message = message.replace("%currency%", args[1]);
+            
+            double balance = Double.parseDouble(args[2]);
+                
+            if (balance >= 0)
+            {
+                message = message.replace("%pos-balance%", lcoFormat.format(balance));
+                message = message.replace("%neg-balance%", "");
+            }
+            else
+            {
+                message = message.replace("%pos-balance%", "");
+                message = message.replace("%neg-balance%", lcoFormat.format(balance));
+            }
+        }
+        else if (message.equals(messageAccountBalance))
+        {
+            message = message.replace("%currency%", args[0]);
+            
+            double balance = Double.parseDouble(args[1]);
+                
+            if (balance >= 0)
+            {
+                message = message.replace("%pos-balance%", lcoFormat.format(balance));
+                message = message.replace("%neg-balance%", "");
+            }
+            else
+            {
+                message = message.replace("%pos-balance%", "");
+                message = message.replace("%neg-balance%", lcoFormat.format(balance));
+            }
+        }
+        else if (message.equals(messageBankBalance))
+        {
+            message = message.replace("%bank%", args[0]);
+            
+            double balance = Double.parseDouble(args[1]);
+                
+            if (balance >= 0)
+            {
+                message = message.replace("%pos-balance%", lcoFormat.format(balance));
+                message = message.replace("%neg-balance%", "");
+            }
+            else
+            {
+                message = message.replace("%pos-balance%", "");
+                message = message.replace("%neg-balance%", lcoFormat.format(balance));
+            }
+        }
+        else if (message.equals(messageCurrencySet))
+        {
+            message = message.replace("%player%", args[0]);
+            message = message.replace("%currency%", args[1]);
+        }
+        else if (message.equals(messageExpCheck))
+        {
+            message = message.replace("%exp%", args[0]);
+        }
+        else if (message.equals(messageGetBalance) || message.equals(messageSetBalance))
+        {
+            message = message.replace("%player%", args[0]);
+            message = message.replace("%balance%", lcoFormat.format(Double.parseDouble(args[1])));
+            message = message.replace("%currency%", args[2]);
+        }
+        else if (message.equals(messageGive))
+        {
+            message = message.replace("%player%", args[0]);
+            message = message.replace("%amount%", lcoFormat.format(Double.parseDouble(args[1])));
+            message = message.replace("%currency%", args[2]);
+        }
+        else if (message.equals(errorTheyEnough))
+        {
+            message = message.replace("%player%", args[0]);
+        }
+        else if (message.equals(messagePayedTo))
+        {
+            message = message.replace("%amount%", lcoFormat.format(Double.parseDouble(args[0])));
+            message = message.replace("%currency%", args[1]);
+            message = message.replace("%player%", args[2]);
+        }
+        else if (message.equals(messagePayedFrom))
+        {
+            message = message.replace("%player%", args[0]);
+            message = message.replace("%amount%", lcoFormat.format(Double.parseDouble(args[1])));
+            message = message.replace("%currency%", args[2]);
+        }
+        else if (message.equals(messageTook))
+        {
+            message = message.replace("%amount%", lcoFormat.format(Double.parseDouble(args[0])));
+            message = message.replace("%currency%", args[1]);
+            message = message.replace("%account%", args[2]);
+        }
+        else if (message.equals(messageCreated) || message.equals(messageDeleted) || message.equals(messageEmpty) || message.equals(errorAccountExists))
+        {
+            message = message.replace("%account%", args[0]);
+        }
+        else if (message.equals(errorNoBank) || message.equals(errorNoBankAccount) || message.equals(messageBankCreated) || message.equals(errorBankExists) || message.equals(messageBankDeleted))
+        {
+            message = message.replace("%bank%", args[0]);
+        }
+        else if (message.equals(errorBankAccountExists) || message.equals(messageBankAccountDeleted) || message.equals(messageBankAccountCreated) || message.equals(messageEmptyBankAccount))
+        {
+            message = message.replace("%account%", args[0]);
+            message = message.replace("%bank%", args[1]);
+        }
+        else if (message.equals(messageBankRenamed))
+        {
+            message = message.replace("%bank%", args[0]);
+            message = message.replace("%oldbank%", args[1]);
+        }
+        else if (message.equals(messageGetBankAccount) || message.equals(messageSetBankAccount))
+        {
+            message = message.replace("%account%", args[0]);
+            message = message.replace("%bank%", args[1]);
+            message = message.replace("%balance%", args[2]);
+        }
+        else if (message.equals(messageBankAccountRenamed))
+        {
+            message = message.replace("%account%", args[0]);
+            message = message.replace("%bank%", args[1]);
+            message = message.replace("%oldaccount%", args[2]);
+            message = message.replace("%oldbank%", args[3]);
+        }
+        else if (message.equals(messageBankAccountDeposit) || message.equals(messageBankAccountWithdraw))
+        {
+            message = message.replace("%bank%", args[0]);
+            message = message.replace("%account%", args[1]);
+            message = message.replace("%amount%", lcoFormat.format(Double.parseDouble(args[2])));
+        }
+        
+        return lcoFormat.color(message);
+    }
+}
