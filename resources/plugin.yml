@@ -1,5 +1,5 @@
 name: LunaConomy
-main: net.shiroumi.lunaconomy.LunaConomy
+main: net.shiroumi.lunaconomy.LunaConomyCore
 version: 1.6
 description: >
              Economy Plugin.
