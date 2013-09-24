@@ -63,6 +63,7 @@ public class Util {
 	public static String getIp(Player p) {
 		return p.getAddress().toString().split("/")[1].split(":")[0];
 	}
+
 	public static void copyFileFromJar(File targetFile, String sourceFilePath, boolean isBinary) {
 		if(!targetFile.getParentFile().exists())
 			targetFile.getParentFile().mkdirs();
@@ -72,12 +73,9 @@ public class Util {
 		BufferedReader br = null;
 		OutputStream   os = null;
 		PrintWriter    pw = null;
-		System.out.println("Util => copyFileFromJar : " + sourceFilePath);
 		try {
 			jar = new JarFile(LunaConomyCore.getInstance().getPluginJarFile());
-			System.out.println("Util => copyFileFromJar : " + jar);
 			entry = jar.getEntry(sourceFilePath);
-			System.out.println("Util => copyFileFromJar : " + entry);
 			is = jar.getInputStream(entry);
 			if(isBinary) {
 			os = new FileOutputStream(targetFile);
@@ -97,7 +95,7 @@ public class Util {
 			e.printStackTrace();
 		}finally{
 				try {
-					if(jar != null) jar.close();
+					if(jar!= null)  jar.close();
 					if(is != null)  is.close();
 					if(br != null)  br.close();
 					if(os != null)  os.close();

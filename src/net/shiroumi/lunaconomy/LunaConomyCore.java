@@ -18,6 +18,7 @@ public class LunaConomyCore extends JavaPlugin {
 	public LunaConomyCore() {
 		Instance = this;
 	}
+	
 	@Override
 	public void onEnable(){
 		log = this.getLogger();
@@ -26,6 +27,7 @@ public class LunaConomyCore extends JavaPlugin {
 		CommandRegister.Register(new CmdMoney());
 		log.info("Enabled " + Name + "!");
 	}
+	
 	@Override
 	public void onDisable(){
 		try {

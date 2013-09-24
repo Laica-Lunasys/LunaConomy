@@ -1,77 +1,29 @@
-####################################
-# Central Language File (English)                       #
-####################################
-
-#Prefix
 infoprefix: '&a[Info]&f '
 alertprefix: '&c[Warning]&f '
 
-#Login/Logout
-loginmessage: '%player has joined server'
-logoutmessage: '%player has quitted server'
+ShowMoney: '%player Money has $%amount'
 
-#OnlinePlayer
-onlinePlayers1: '&aNow Online Players: %number Player'
-onlinePlayers2: '%onlineuser
-
-#ServerReload
+fatalerror: '&cError! Details the visit Console.'
+errorperm: '&c You have Don''t Permission &f(%perm)'
+playernotfound: '&cCan''t find Player : %player'
+onlinePlayers: '&aNow Online Players: %onlineuser'
 serverreload: '&aThis server is reloading...'
 serverreloadsuc: '&aThis server was reloaded.'
-
-#Teleport
-playertp: 'TeleportSuccess!! &9%fromPlayer&f -> &a%toPlayer'
-hometp: 'HomeTeleport!! &9%homename'
-
-#MCBans Cooperation
-playerrep: 'Player %player has %rep Reptation.'
-
-#StopCmd
 serverstopcount: '&cThis server is stop a after &e%countsec.&c'
 serverstopped: 'Server has Stopped!'
-
-#LockCmd
 serverlockdown: '&cThe server is locked in %locktime seconds later.'
 serverlockmsg: '&cThis server Locked.'
 serverunlock: '&aServer is currently locked.'
-
-#observation
-toolenable: '&aObserv Tool Enable'
-tooldisable: '&cObserv Tool Disable'
-search: '&7Wait...'
-startrollb: 'Start %player''s rollback!'
-donerollb: 'RollbackComplete!'
-playersearch: '%player''s Result'
-searchresult: '|%date|%id|%player|%log|%item|%status|'
-status1: 'placed'
-status2: 'break'
-status3: 'add'
-status4: 'remove'
-status5: 'kill'
-status6: 'dead'
-
-#Plugins Control
 pluginreload: '&aReload Plugin(%plugin)'
 pluginenabled: '&aStart Plugin (%plugin)'
 plugindisabled: '&cStop Plugin (%plugin)'
 pluginnotfound: '&c%plugin has NotFound.'
-
-#ClearInventory
 clearinventory: '&cRemoved items from the %player'
-
-#Multiworld
 worldnotfound: '&cWorld not found (Name: %world)'
 worldcreatefail: '&cFailed Create world (Name: %world)'
 worldcreatesuccess: '&aSuccessful Generation of World (Name: %world)'
 worldteleport: '&aTeleported World (Name: %world)'
-
-#PrivateMessage
-myselfsend: '&cCan not send a message to myself'
+cmdplayeronly: '&c Can''t execute this command the Console.'
+cmdconsoleonly: '&c This command a only execute the Console.'
+cmdillegalargument: '&c Illegal Arguments.'
 noreply: '&cYou no have PrivateMessage!'
-
-#Central PluginErrorMsg
-fatalerror: '&cError! Details the visit Console.'
-errorperm: '&cYou Don''t  have Permission &f(%perm)'
-playernotfound: '&cCan''t find Player : %player'
-cmdplayeronly: '&cCan''t execute this command the Console.'
-cmdconsoleonly: '&cThis command a only execute the Console.'
-cmdillegalargument: '&cIllegal Arguments.'
