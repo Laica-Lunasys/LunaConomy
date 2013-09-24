@@ -14,7 +14,7 @@ public class LunaConomyCore extends JavaPlugin {
 	public static LunaConomyCore Instance;
 	public static Logger log;
 	private static ConfigurationManager cfg;
-	public static String Name = "LunaConomy";
+	public final static String Name = "LunaConomy";
 	public LunaConomyCore() {
 		Instance = this;
 	}
@@ -23,7 +23,7 @@ public class LunaConomyCore extends JavaPlugin {
 	public void onEnable(){
 		log = this.getLogger();
 		cfg = new ConfigurationManager(this);
-		MoneyController.load(new File(cfg.getString("MoneyDataFile")));
+		MoneyController.load(new File(this.getDataFolder(), cfg.getString("MoneyDataFile")));
 		CommandRegister.Register(new CmdMoney());
 		log.info("Enabled " + Name + "!");
 	}
@@ -38,8 +38,6 @@ public class LunaConomyCore extends JavaPlugin {
 	}
 	
 	public static LunaConomyCore getInstance(){
-		System.out.println("getInstance : " + Instance);
-		System.out.println("getInstance : " + log);
 		return Instance;
 	}
 	

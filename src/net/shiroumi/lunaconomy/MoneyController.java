@@ -18,16 +18,17 @@ public final class MoneyController {
 	private static Map<String, Integer> moneyMap = new HashMap<String, Integer>();
 	
 	public static void load(File par1File) {
+		InputStreamReader isr = null;
+		BufferedReader    br  = null;
+		StringBuilder     sb  = new StringBuilder();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(par1File));
-			BufferedReader br = new BufferedReader(isr);
-			StringBuilder sb = new StringBuilder();
+			isr = new InputStreamReader(new FileInputStream(par1File));
+			br = new BufferedReader(isr);
 			while(br.ready()){
 				sb.append(br.readLine());
 				sb.append('\n');
 			}
 			moneyMap = deserializeMoneyMap(sb.toString());
-			br.close();
 			LunaConomyCore.log.info(String.format("Loaded %d Player(s) Data.", moneyMap.size()));
 		} catch (FileNotFoundException e) {
 			try {
@@ -38,6 +39,13 @@ public final class MoneyController {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+				try {
+					if(br != null) br.close();
+					if(isr != null) isr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
 	}
 	
@@ -65,14 +73,14 @@ public final class MoneyController {
 	public static int getMoney(Player par1Player){
 		return getMoney(par1Player.getName());
 	}
-	
-	public static int setMoney(Player par1Player, int par2Amount){
-		moneyMap.put(par1Player.getName(), par2Amount);
+
+	public static int setMoney(String par1Player, int par2Amount){
+		moneyMap.put(par1Player, par2Amount);
 		return par2Amount;
 	}
 	
-	public static boolean containPlayer(Player par1Player){
-		return moneyMap.containsKey(par1Player);
+	public static int setMoney(Player par1Player, int par2Amount){
+		return setMoney(par1Player.getName(), par2Amount);
 	}
 	
 	private static String serializeMoneyMap(){
