@@ -40,11 +40,6 @@ public class LunaConomyCore extends JavaPlugin {
 	public static LunaConomyCore getInstance(){
 		return Instance;
 	}
-	
-	public File getPluginJarFile(){
-		return this.getFile();
-	}
-	
 	public static String getLang(){
 		return cfg.getString("lang");
 	}

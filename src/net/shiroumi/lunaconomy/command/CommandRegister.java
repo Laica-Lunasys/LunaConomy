@@ -1,5 +1,6 @@
 package net.shiroumi.lunaconomy.command;
 
+
 import net.shiroumi.lunaconomy.LunaConomyCore;
 
 public final class CommandRegister {

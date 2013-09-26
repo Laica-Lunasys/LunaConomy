@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -74,7 +76,9 @@ public class Util {
 		OutputStream   os = null;
 		PrintWriter    pw = null;
 		try {
-			jar = new JarFile(LunaConomyCore.getInstance().getPluginJarFile());
+			Method get_File = LunaConomyCore.class.getDeclaredMethod("getFile");
+			get_File.setAccessible(true);
+			jar = new JarFile((File) get_File.invoke(LunaConomyCore.getInstance()));
 			entry = jar.getEntry(sourceFilePath);
 			is = jar.getInputStream(entry);
 			if(isBinary) {
@@ -92,6 +96,16 @@ public class Util {
 				}
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}finally{
 				try {

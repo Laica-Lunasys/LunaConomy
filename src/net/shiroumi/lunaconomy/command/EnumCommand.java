@@ -1,5 +1,6 @@
 package net.shiroumi.lunaconomy.command;
 
+
 /**
  * @author squarep
  */
